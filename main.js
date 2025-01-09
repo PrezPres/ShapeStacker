@@ -20,6 +20,10 @@ const config = {
 const game = new Phaser.Game(config);
 
 let nextShapeType;
+let timerText;
+let countdown = 30; // Countdown timer (in seconds)
+let timerEvent;
+let shapes = []; // To track active shapes
 
 function preload() {
   // Load images for shapes
@@ -39,30 +43,24 @@ function create() {
 
   // Draw the top line and tall side borders
   const graphics = this.add.graphics();
-  graphics.lineStyle(4, 0xffffff); // White line with thickness of 4
+  graphics.lineStyle(4, 0xffffff);
 
   // Top line
   graphics.beginPath();
-  graphics.moveTo(centerX, centerY); // Top-left corner
-  graphics.lineTo(centerX + gameWidth, centerY); // Top-right corner
-  graphics.strokePath();
-
-  // Bottom line
-  graphics.beginPath();
-  graphics.moveTo(centerX, centerY + gameHeight); // Bottom-left corner
-  graphics.lineTo(centerX + gameWidth, centerY + gameHeight); // Bottom-right corner
+  graphics.moveTo(centerX, centerY);
+  graphics.lineTo(centerX + gameWidth, centerY);
   graphics.strokePath();
 
   // Left border
   graphics.beginPath();
-  graphics.moveTo(centerX, centerY); // Start at top-left
-  graphics.lineTo(centerX, centerY + gameHeight); // Extend down to ground
+  graphics.moveTo(centerX, centerY);
+  graphics.lineTo(centerX, centerY + gameHeight);
   graphics.strokePath();
 
   // Right border
   graphics.beginPath();
-  graphics.moveTo(centerX + gameWidth, centerY); // Start at top-right
-  graphics.lineTo(centerX + gameWidth, centerY + gameHeight); // Extend down to ground
+  graphics.moveTo(centerX + gameWidth, centerY);
+  graphics.lineTo(centerX + gameWidth, centerY + gameHeight);
   graphics.strokePath();
 
   // Add ground
@@ -79,7 +77,7 @@ function create() {
     font: "18px Arial",
     fill: "#fff",
   });
-  instructions.setOrigin(0.5); // Center the text horizontally
+  instructions.setOrigin(0.5);
 
   // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
@@ -89,14 +87,35 @@ function create() {
   });
   const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 30, nextShapeType).setScale(0.5);
 
+  // Add countdown timer
+  timerText = this.add.text(config.width / 2, 50, `Time Left: ${countdown}`, {
+    font: "18px Arial",
+    fill: "#fff",
+  });
+  timerText.setOrigin(0.5);
+
+  // Start timer
+  timerEvent = this.time.addEvent({
+    delay: 1000, // 1 second
+    callback: () => {
+      countdown--;
+      timerText.setText(`Time Left: ${countdown}`);
+      if (countdown <= 0) {
+        timerEvent.remove(); // Stop the timer
+        timerText.setText("Time's Up!");
+      }
+    },
+    callbackScope: this,
+    loop: true,
+  });
+
   // Pointer down event to drop shapes
   this.input.on("pointerdown", (pointer) => {
-    if (pointer.y < centerY) {
-      //const x = Phaser.Math.Clamp(pointer.x, centerX + 10, centerX + gameWidth - 10);
-      //const shape = this.matter.add.image(x, centerY - 100, nextShapeType);
+    if (countdown > 0 && pointer.y < centerY) {
       const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
       const shape = this.matter.add.image(x, centerY, nextShapeType);
       shape.setBounce(0.5).setFriction(0.5);
+      shapes.push(shape); // Track the shape
 
       // Update next shape
       nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
@@ -106,5 +125,6 @@ function create() {
 }
 
 function update() {
-  // No updates yet
+  // Remove shapes that have fallen off the game area
+  shapes = shapes.filter((shape) => shape.y < config.height);
 }
