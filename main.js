@@ -40,8 +40,8 @@ function create() {
   const gameHeight = 500; // Height of the gameplay area
 
   // Calculate the position to center the gameplay area
-  const centerX = (this.scale.width - gameWidth) / 2;
-  const centerY = (this.scale.height - gameHeight) / 2;
+  const centerX = (config.width - gameWidth) / 2;
+  const centerY = (config.height - gameHeight) / 2;
 
   // Draw the border around the gameplay area
   const graphics = this.add.graphics();
@@ -50,7 +50,7 @@ function create() {
 
   // Add ground at the bottom of the gameplay area
   const ground = this.matter.add.rectangle(
-    this.scale.width / 2,
+    config.width / 2,
     centerY + gameHeight - 20,
     gameWidth,
     40,
