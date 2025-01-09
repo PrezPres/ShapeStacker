@@ -25,6 +25,7 @@ let countdown = 30; // Countdown timer (in seconds)
 let timerEvent;
 let shapes = []; // To track active shapes
 let shapesInBoxText; // To display the number of shapes in the box
+let timerStarted = false; // To check if the timer has started
 
 function preload() {
   // Load images for shapes
@@ -107,8 +108,27 @@ function create() {
     fill: "#fff",
   });
   shapesInBoxText.setOrigin(0.5);
-  
-// Start countdown timer
+
+  // Pointer down event to drop shapes
+  this.input.on("pointerdown", (pointer) => {
+    if (!timerStarted) {
+      startTimer.call(this); // Start timer on first click
+      timerStarted = true;
+    }
+    
+    if (countdown > 0 && pointer.y < centerY) {
+      const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
+      const shape = this.matter.add.image(x, centerY, nextShapeType);
+      shape.setBounce(0.5).setFriction(0.5);
+      shapes.push(shape); // Track the shape
+
+      // Update next shape
+      nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
+      nextShape.setTexture(nextShapeType);
+    }
+  });
+}
+
 function startTimer() {
   timerEvent = this.time.addEvent({
     delay: 1000, // 1 second
@@ -126,26 +146,6 @@ function startTimer() {
     },
     callbackScope: this,
     loop: true,
-  });
-}
-
-  // Pointer down event to drop shapes
-  this.input.on("pointerdown", (pointer) => {
-    if (!timerStarted) {
-      startTimer.call(this); // Start timer on first click
-    timerStarted = true;
-    }
-    
-    if (countdown > 0 && pointer.y < centerY) {
-      const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
-      const shape = this.matter.add.image(x, centerY, nextShapeType);
-      shape.setBounce(0.5).setFriction(0.5);
-      shapes.push(shape); // Track the shape
-
-      // Update next shape
-      nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
-      nextShape.setTexture(nextShapeType);
-    }
   });
 }
 
