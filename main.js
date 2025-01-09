@@ -47,6 +47,12 @@ function create() {
   graphics.lineTo(centerX + gameWidth, centerY); // Top-right corner
   graphics.strokePath();
 
+  // Bottom line
+  graphics.beginPath();
+  graphics.moveTo(centerX, centerY + gameHeight); // Bottom-left corner
+  graphics.lineTo(centerX + gameWidth, centerY); // Bottom-right corner
+  graphics.strokePath();
+
   // Left border
   graphics.beginPath();
   graphics.moveTo(centerX, centerY); // Start at top-left
