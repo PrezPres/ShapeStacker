@@ -87,7 +87,7 @@ function create() {
     font: "16px Arial",
     fill: "#fff",
   });
-  const nextShape = this.add.image(centerX + gameWidth - 50, centerY - 20, nextShapeType).setScale(0.5);
+  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 20, nextShapeType).setScale(0.5);
 
   // Pointer down event to drop shapes
   this.input.on("pointerdown", (pointer) => {
