@@ -68,7 +68,7 @@ function create() {
   // Add ground
   const ground = this.matter.add.rectangle(
     config.width / 2,
-    centerY + gameHeight,
+    centerY + gameHeight + 10,
     gameWidth,
     40,
     { isStatic: true }
