@@ -93,17 +93,17 @@ function create() {
     font: "16px Arial",
     fill: "#fff",
   });
-  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 20, nextShapeType).setScale(0.5);
+  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 30, nextShapeType).setScale(0.5);
 
   // Add countdown timer
-  timerText = this.add.text(config.width / 2, 50, `Time Left: ${countdown}`, {
+  timerText = this.add.text(centerX, centerY + gameHeight + 30, `Time Left: ${countdown}`, {
     font: "18px Arial",
     fill: "#fff",
   });
   timerText.setOrigin(0.5);
 
   // Shapes in box text
-  shapesInBoxText = this.add.text(config.width / 2, 70, `Shapes in Box: 0`, {
+  shapesInBoxText = this.add.text(centerX + gameWidth - 100, centerY + gameHeight + 30), `Shapes in Box: 0`, {
     font: "18px Arial",
     fill: "#fff",
   });
