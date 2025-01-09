@@ -63,13 +63,13 @@ function create() {
     fill: "#fff",
   });
 
-  // Show the next shape
+  // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
-  const nextShapeText = this.add.text(config.width - 200, 10, "Next:", {
+  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - 60, "Next:", {
     font: "16px Arial",
     fill: "#fff",
   });
-  const nextShape = this.add.image(config.width - 100, 50, nextShapeType);
+  const nextShape = this.add.image(centerX + gameWidth - 50, centerY - 30, nextShapeType).setScale(0.5);
 
   // Pointer down event to drop shapes
   this.input.on("pointerdown", (pointer) => {
