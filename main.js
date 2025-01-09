@@ -181,7 +181,9 @@ function lockShapePhysics() {
 
 function update() {
   // Only update the count if it's not locked
-  if (!lockedCount) {
+  if (additionalTimeElapsed) {
+    shapesInBoxText.setText(`Final Count Locked: ${shapes.filter((shape) => shape.y < config.height).length}`);
+  } else {
     const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
     shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
   }
@@ -189,3 +191,4 @@ function update() {
   // Remove shapes that have fallen off the game area
   shapes = shapes.filter((shape) => shape.y < config.height);
 }
+
