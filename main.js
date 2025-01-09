@@ -37,12 +37,26 @@ function create() {
   const centerX = (config.width - gameWidth) / 2;
   const centerY = (config.height - gameHeight) / 2;
 
-  // Draw only the top line
+  // Draw the top line and tall side borders
   const graphics = this.add.graphics();
   graphics.lineStyle(4, 0xffffff); // White line with thickness of 4
+
+  // Top line
   graphics.beginPath();
-  graphics.moveTo(centerX, centerY); // Start at the top-left corner of the gameplay area
-  graphics.lineTo(centerX + gameWidth, centerY); // End at the top-right corner
+  graphics.moveTo(centerX, centerY); // Top-left corner
+  graphics.lineTo(centerX + gameWidth, centerY); // Top-right corner
+  graphics.strokePath();
+
+  // Left border
+  graphics.beginPath();
+  graphics.moveTo(centerX, centerY); // Start at top-left
+  graphics.lineTo(centerX, centerY + gameHeight); // Extend down to ground
+  graphics.strokePath();
+
+  // Right border
+  graphics.beginPath();
+  graphics.moveTo(centerX + gameWidth, centerY); // Start at top-right
+  graphics.lineTo(centerX + gameWidth, centerY + gameHeight); // Extend down to ground
   graphics.strokePath();
 
   // Add ground
@@ -55,7 +69,7 @@ function create() {
   );
 
   // Instruction text
-  const instructions = this.add.text(config.width / 2, centerY - 40, "Tap above the line to drop shapes!", {
+  const instructions = this.add.text(config.width / 2, centerY + 20, "Tap above the line to drop shapes!", {
     font: "18px Arial",
     fill: "#fff",
   });
@@ -63,11 +77,11 @@ function create() {
 
   // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
-  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - 60, "Next:", {
+  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - 40, "Next:", {
     font: "16px Arial",
     fill: "#fff",
   });
-  const nextShape = this.add.image(centerX + gameWidth - 50, centerY - 30, nextShapeType).setScale(0.5);
+  const nextShape = this.add.image(centerX + gameWidth - 50, centerY - 20, nextShapeType).setScale(0.5);
 
   // Pointer down event to drop shapes
   this.input.on("pointerdown", (pointer) => {
