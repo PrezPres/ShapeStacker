@@ -20,10 +20,12 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
-  // Load local images
   this.load.image('rectangle', 'assets/images/rectangle.png');
   this.load.image('square', 'assets/images/square.png');
   this.load.image('sticky', 'assets/images/sticky.png');
+  this.load.image('triangle', 'assets/images/triangle.png');
+  this.load.image('circle', 'assets/images/circle.png');
+  this.load.image('star', 'assets/images/star.png');
 }
 
 function create() {
