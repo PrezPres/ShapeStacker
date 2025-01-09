@@ -26,9 +26,8 @@ let timerEvent;
 let shapes = []; // To track active shapes
 let shapesInBoxText; // To display the number of shapes in the box
 let timerStarted = false; // To check if the timer has started
-let additionalTime = 15; // 15 seconds after the timer ends
-let additionalTimeElapsed = false; // Flag to track if additional time has passed
-let lockedCount = false; // Flag to lock the shape count
+let additionalTimeElapsed = false; // Flag to indicate extra time is over
+let extraTime = 15; // Updated to 15 seconds after the main timer ends
 
 function preload() {
   // Load images for shapes
@@ -142,26 +141,28 @@ function startTimer() {
         timerEvent.remove(); // Stop the timer
         timerText.setText("Time's Up!");
 
-        // Count shapes in the box
-        const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
-        shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
+        // Add extra time after countdown
+        startExtraTime.call(this);
+      }
+    },
+    callbackScope: this,
+    loop: true,
+  });
+}
 
-        // Start the additional 15-second window
-        this.time.addEvent({
-          delay: 1000,
-          callback: () => {
-            additionalTime--; // Countdown additional time
-            if (additionalTime <= 0 && !additionalTimeElapsed) {
-              additionalTimeElapsed = true;
-              shapesInBoxText.setText("Final Count Locked");
-
-              // Lock the count and stop physics updates
-              lockedCount = true;
-              lockShapePhysics(); // Function to stop dynamic physics
-            }
-          },
-          callbackScope: this,
-          loop: true,
+function startExtraTime() {
+  // Additional 15 seconds after the main timer ends
+  this.time.addEvent({
+    delay: 1000, // 1 second
+    callback: () => {
+      extraTime--;
+      if (extraTime <= 0) {
+        additionalTimeElapsed = true;
+        shapesInBoxText.setText(`Final Count Locked: ${shapes.filter((shape) => shape.y < config.height).length}`);
+        
+        // Lock gravity and movement of shapes
+        shapes.forEach((shape) => {
+          shape.setStatic(true);  // Lock the shapes in place
         });
       }
     },
@@ -170,25 +171,11 @@ function startTimer() {
   });
 }
 
-function lockShapePhysics() {
-  // Disable gravity and friction for all shapes
-  shapes.forEach((shape) => {
-    shape.setGravity(0, 0);  // Set gravity to 0
-    shape.setFriction(0);    // Set friction to 0
-    shape.setVelocity(0, 0); // Set velocity to 0 to stop movement
-  });
-}
-
 function update() {
-  // Only update the count if it's not locked
-  if (additionalTimeElapsed) {
-    shapesInBoxText.setText(`Final Count Locked: ${shapes.filter((shape) => shape.y < config.height).length}`);
-  } else {
+  // Remove shapes that have fallen off the game area
+  if (!additionalTimeElapsed) {
+    shapes = shapes.filter((shape) => shape.y < config.height);
     const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
     shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
   }
-
-  // Remove shapes that have fallen off the game area
-  shapes = shapes.filter((shape) => shape.y < config.height);
 }
-
