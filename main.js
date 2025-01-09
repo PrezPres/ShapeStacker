@@ -68,7 +68,7 @@ function create() {
   // Add ground
   const ground = this.matter.add.rectangle(
     config.width / 2,
-    centerY + gameHeight + 10,
+    centerY + gameHeight + 20,
     gameWidth,
     40,
     { isStatic: true }
@@ -92,8 +92,10 @@ function create() {
   // Pointer down event to drop shapes
   this.input.on("pointerdown", (pointer) => {
     if (pointer.y < centerY) {
-      const x = Phaser.Math.Clamp(pointer.x, centerX + 10, centerX + gameWidth - 10);
-      const shape = this.matter.add.image(x, centerY - 100, nextShapeType);
+      //const x = Phaser.Math.Clamp(pointer.x, centerX + 10, centerX + gameWidth - 10);
+      //const shape = this.matter.add.image(x, centerY - 100, nextShapeType);
+      const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
+      const shape = this.matter.add.image(x, centerY, nextShapeType);
       shape.setBounce(0.5).setFriction(0.5);
 
       // Update next shape
