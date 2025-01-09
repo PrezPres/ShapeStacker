@@ -55,11 +55,11 @@ function create() {
   );
 
   // Instruction text
-  const instructions = this.add.text(config.width / 2, centerY - 50, "Tap above the line to drop shapes!", {
+  const instructions = this.add.text(config.width / 2, centerY - 40, "Tap above the line to drop shapes!", {
     font: "18px Arial",
     fill: "#fff",
   });
-  instructions.setOrigin(0.5); // Center the text
+  instructions.setOrigin(0.5); // Center the text horizontally
 
   // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
