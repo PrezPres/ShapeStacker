@@ -107,8 +107,9 @@ function create() {
     fill: "#fff",
   });
   shapesInBoxText.setOrigin(0.5);
-
-  // Start timer
+  
+// Start countdown timer
+function startTimer() {
   timerEvent = this.time.addEvent({
     delay: 1000, // 1 second
     callback: () => {
@@ -119,16 +120,22 @@ function create() {
         timerText.setText("Time's Up!");
 
         // Count shapes in the box
-        const shapesInBox = shapes.filter((shape) => shape.y < centerY + gameHeight).length;
+        const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
         shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
       }
     },
     callbackScope: this,
     loop: true,
   });
+}
 
   // Pointer down event to drop shapes
   this.input.on("pointerdown", (pointer) => {
+    if (!timerStarted) {
+      startTimer.call(this); // Start timer on first click
+    timerStarted = true;
+    }
+    
     if (countdown > 0 && pointer.y < centerY) {
       const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
       const shape = this.matter.add.image(x, centerY, nextShapeType);
