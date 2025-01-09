@@ -18,12 +18,11 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
+
 let nextShapeType;
-let highScore = 0;
-let currentHeight = 0;
 
 function preload() {
-  // Load local images
+  // Load images for shapes
   this.load.image("rectangle", "assets/images/rectangle.png");
   this.load.image("square", "assets/images/square.png");
   this.load.image("sticky", "assets/images/sticky.png");
@@ -33,20 +32,18 @@ function preload() {
 }
 
 function create() {
-  // Gameplay area dimensions
   const gameWidth = 600;
   const gameHeight = 500;
   const centerX = (config.width - gameWidth) / 2;
   const centerY = (config.height - gameHeight) / 2;
 
-  // Draw the border around the gameplay area
+  // Draw only the top line
   const graphics = this.add.graphics();
-  graphics.lineStyle(4, 0xffffff);
-  graphics.strokeRect(centerX, centerY, gameWidth, gameHeight);
-
-  // Extend borders upward
-  graphics.lineStyle(2, 0xffffff);
-  graphics.strokeRect(centerX - 10, centerY - 100, gameWidth + 20, gameHeight + 100);
+  graphics.lineStyle(4, 0xffffff); // White line with thickness of 4
+  graphics.beginPath();
+  graphics.moveTo(centerX, centerY); // Start at the top-left corner of the gameplay area
+  graphics.lineTo(centerX + gameWidth, centerY); // End at the top-right corner
+  graphics.strokePath();
 
   // Add ground
   const ground = this.matter.add.rectangle(
@@ -58,10 +55,11 @@ function create() {
   );
 
   // Instruction text
-  this.add.text(centerX + 10, centerY - 90, "Tap above the box to drop shapes!", {
-    font: "16px Arial",
+  const instructions = this.add.text(config.width / 2, centerY - 50, "Tap above the line to drop shapes!", {
+    font: "18px Arial",
     fill: "#fff",
   });
+  instructions.setOrigin(0.5); // Center the text
 
   // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
@@ -81,23 +79,10 @@ function create() {
       // Update next shape
       nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
       nextShape.setTexture(nextShapeType);
-
-      // Check height
-      shape.on("update", () => {
-        if (shape.body.position.y < currentHeight || currentHeight === 0) {
-          currentHeight = shape.body.position.y;
-          const heightReached = Math.round((centerY + gameHeight - currentHeight) / 10);
-          highScore = Math.max(highScore, heightReached);
-          this.add.text(centerX + 10, centerY + gameHeight + 10, `Height: ${heightReached} - High Score: ${highScore}`, {
-            font: "14px Arial",
-            fill: "#fff",
-          });
-        }
-      });
     }
   });
 }
 
 function update() {
-  // Game logic can go here if needed
+  // No updates yet
 }
