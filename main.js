@@ -50,7 +50,7 @@ function create() {
   // Bottom line
   graphics.beginPath();
   graphics.moveTo(centerX, centerY + gameHeight); // Bottom-left corner
-  graphics.lineTo(centerX + gameWidth, centerY); // Bottom-right corner
+  graphics.lineTo(centerX + gameWidth, centerY + gameHeight); // Bottom-right corner
   graphics.strokePath();
 
   // Left border
