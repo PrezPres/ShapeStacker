@@ -75,7 +75,7 @@ function create() {
   );
 
   // Instruction text
-  const instructions = this.add.text(config.width, centerY + 20, "Tap above the line to drop shapes!", {
+  const instructions = this.add.text(config.width / 2, centerY + 20, "Tap above the line to drop shapes!", {
     font: "18px Arial",
     fill: "#fff",
   });
