@@ -52,7 +52,7 @@ function create() {
 
   this.input.on('pointerdown', () => {
     const x = Phaser.Math.Between(100, 700);
-    const shapeType = Phaser.Math.RND.pick(['rectangle', 'square', 'sticky']);
+    const shapeType = Phaser.Math.RND.pick(['rectangle', 'square', 'sticky', 'triangle', 'circle', 'star']);
     const shape = this.matter.add.image(x, 0, shapeType);
     shape.setBounce(0.5).setFriction(0.5);
   });
