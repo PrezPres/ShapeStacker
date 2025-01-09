@@ -20,6 +20,7 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
+  // Load local images
   this.load.image('rectangle', 'assets/images/rectangle.png');
   this.load.image('square', 'assets/images/square.png');
   this.load.image('sticky', 'assets/images/sticky.png');
@@ -29,9 +30,10 @@ function preload() {
 }
 
 function create() {
-  // Gameplay area dimensions
-  const gameWidth = 400; // Width of the gameplay area
-  const gameHeight = 400; // Height of the gameplay area
+  // Resume AudioContext on user interaction
+  this.input.once('pointerdown', () => {
+    this.sound.context.resume();
+  });
 
   // Calculate the position to center the gameplay area
   const centerX = (this.scale.width - gameWidth) / 2;
@@ -42,12 +44,18 @@ function create() {
   graphics.lineStyle(4, 0xffffff); // White border with thickness of 4
   graphics.strokeRect(centerX, centerY, gameWidth, gameHeight);
 
-  // Add game objects within the centered gameplay area
-  this.add.text(centerX + 20, centerY + 20, 'Game Area', { fontSize: '16px', color: '#fff' });
+  const ground = this.matter.add.rectangle(400, 580, 800, 40, {
+    isStatic: true,
+  });
 
-  // Example of placing a shape within the gameplay area
-  const square = this.add.image(centerX + 50, centerY + 50, 'square');
-  square.setInteractive();
+  this.add.text(10, 10, 'Tap to drop shapes', { font: '16px Arial', fill: '#000' });
+
+  this.input.on('pointerdown', () => {
+    const x = Phaser.Math.Between(100, 700);
+    const shapeType = Phaser.Math.RND.pick(['rectangle', 'square', 'sticky']);
+    const shape = this.matter.add.image(x, 0, shapeType);
+    shape.setBounce(0.5).setFriction(0.5);
+  });
 }
 
 function update() {
