@@ -26,7 +26,9 @@ let timerEvent;
 let shapes = []; // To track active shapes
 let shapesInBoxText; // To display the number of shapes in the box
 let timerStarted = false; // To check if the timer has started
-let timeAfterEnd = 0; // To track elapsed time after timer ends
+let additionalTime = 15; // 15 seconds after the timer ends
+let additionalTimeElapsed = false; // Flag to track if additional time has passed
+let lockedCount = false; // Flag to lock the shape count
 
 function preload() {
   // Load images for shapes
@@ -140,8 +142,27 @@ function startTimer() {
         timerEvent.remove(); // Stop the timer
         timerText.setText("Time's Up!");
 
-        // Start tracking time after the timer ends
-        timeAfterEnd = 0;
+        // Count shapes in the box
+        const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
+        shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
+
+        // Start the additional 15-second window
+        this.time.addEvent({
+          delay: 1000,
+          callback: () => {
+            additionalTime--; // Countdown additional time
+            if (additionalTime <= 0 && !additionalTimeElapsed) {
+              additionalTimeElapsed = true;
+              shapesInBoxText.setText("Final Count Locked");
+
+              // Lock the count and stop physics updates
+              lockedCount = true;
+              lockShapePhysics(); // Function to stop dynamic physics
+            }
+          },
+          callbackScope: this,
+          loop: true,
+        });
       }
     },
     callbackScope: this,
@@ -149,22 +170,22 @@ function startTimer() {
   });
 }
 
+function lockShapePhysics() {
+  // Disable gravity and friction for all shapes
+  shapes.forEach((shape) => {
+    shape.setGravity(0, 0);  // Set gravity to 0
+    shape.setFriction(0);    // Set friction to 0
+    shape.setVelocity(0, 0); // Set velocity to 0 to stop movement
+  });
+}
+
 function update() {
-  // Remove shapes that have fallen off the game area
-  shapes = shapes.filter((shape) => shape.y < config.height);
-
-  // If time after the end is less than 20 seconds, continue counting and checking for shapes
-  if (timeAfterEnd < 20) {
-    timeAfterEnd += this.game.loop.delta / 1000; // Convert to seconds
-
-    // After 20 seconds, update the shape count to account for shapes still inside the box
-    if (timeAfterEnd >= 20) {
-      const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
-      shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
-    }
+  // Only update the count if it's not locked
+  if (!lockedCount) {
+    const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
+    shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
   }
 
-  // Regular check for shapes that are still inside the box
-  const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
-  shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
+  // Remove shapes that have fallen off the game area
+  shapes = shapes.filter((shape) => shape.y < config.height);
 }
