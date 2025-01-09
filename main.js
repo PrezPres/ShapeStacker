@@ -36,13 +36,13 @@ function create() {
   });
 
   // Calculate the position to center the gameplay area
-  const centerX = (this.scale.width - gameWidth) / 2;
-  const centerY = (this.scale.height - gameHeight) / 2;
+//  const centerX = (this.scale.width - gameWidth) / 2;
+//  const centerY = (this.scale.height - gameHeight) / 2;
 
   // Draw the border around the gameplay area
-  const graphics = this.add.graphics();
-  graphics.lineStyle(4, 0xffffff); // White border with thickness of 4
-  graphics.strokeRect(centerX, centerY, gameWidth, gameHeight);
+//  const graphics = this.add.graphics();
+//  graphics.lineStyle(4, 0xffffff); // White border with thickness of 4
+//  graphics.strokeRect(centerX, centerY, gameWidth, gameHeight);
 
   const ground = this.matter.add.rectangle(400, 580, 800, 40, {
     isStatic: true,
