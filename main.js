@@ -26,6 +26,7 @@ let timerEvent;
 let shapes = []; // To track active shapes
 let shapesInBoxText; // To display the number of shapes in the box
 let timerStarted = false; // To check if the timer has started
+let timeAfterEnd = 0; // To track elapsed time after timer ends
 
 function preload() {
   // Load images for shapes
@@ -139,9 +140,8 @@ function startTimer() {
         timerEvent.remove(); // Stop the timer
         timerText.setText("Time's Up!");
 
-        // Count shapes in the box
-        const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
-        shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
+        // Start tracking time after the timer ends
+        timeAfterEnd = 0;
       }
     },
     callbackScope: this,
@@ -152,4 +152,19 @@ function startTimer() {
 function update() {
   // Remove shapes that have fallen off the game area
   shapes = shapes.filter((shape) => shape.y < config.height);
+
+  // If time after the end is less than 20 seconds, continue counting and checking for shapes
+  if (timeAfterEnd < 20) {
+    timeAfterEnd += this.game.loop.delta / 1000; // Convert to seconds
+
+    // After 20 seconds, update the shape count to account for shapes still inside the box
+    if (timeAfterEnd >= 20) {
+      const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
+      shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
+    }
+  }
+
+  // Regular check for shapes that are still inside the box
+  const shapesInBox = shapes.filter((shape) => shape.y < config.height).length;
+  shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
 }
