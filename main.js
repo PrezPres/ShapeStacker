@@ -35,25 +35,46 @@ function create() {
     this.sound.context.resume();
   });
 
+  // Gameplay area dimensions
+  const gameWidth = 600; // Width of the gameplay area
+  const gameHeight = 500; // Height of the gameplay area
+
   // Calculate the position to center the gameplay area
-//  const centerX = (this.scale.width - gameWidth) / 2;
-//  const centerY = (this.scale.height - gameHeight) / 2;
+  const centerX = (this.scale.width - gameWidth) / 2;
+  const centerY = (this.scale.height - gameHeight) / 2;
 
   // Draw the border around the gameplay area
-//  const graphics = this.add.graphics();
-//  graphics.lineStyle(4, 0xffffff); // White border with thickness of 4
-//  graphics.strokeRect(centerX, centerY, gameWidth, gameHeight);
+  const graphics = this.add.graphics();
+  graphics.lineStyle(4, 0xffffff); // White border with thickness of 4
+  graphics.strokeRect(centerX, centerY, gameWidth, gameHeight);
 
-  const ground = this.matter.add.rectangle(400, 580, 800, 40, {
-    isStatic: true,
+  // Add ground at the bottom of the gameplay area
+  const ground = this.matter.add.rectangle(
+    this.scale.width / 2,
+    centerY + gameHeight - 20,
+    gameWidth,
+    40,
+    { isStatic: true }
+  );
+
+  // Instruction text
+  this.add.text(centerX + 10, centerY + 10, 'Tap to drop shapes', {
+    font: '16px Arial',
+    fill: '#fff',
   });
 
-  this.add.text(10, 10, 'Tap to drop shapes', { font: '16px Arial', fill: '#000' });
-
+  // On pointer down, drop a random shape within the gameplay area
   this.input.on('pointerdown', () => {
-    const x = Phaser.Math.Between(100, 700);
-    const shapeType = Phaser.Math.RND.pick(['rectangle', 'square', 'sticky', 'triangle', 'circle', 'star']);
-    const shape = this.matter.add.image(x, 0, shapeType);
+    const x = Phaser.Math.Between(centerX + 50, centerX + gameWidth - 50);
+    const shapeType = Phaser.Math.RND.pick([
+      'rectangle',
+      'square',
+      'sticky',
+      'triangle',
+      'circle',
+      'star',
+    ]);
+    const shape = this.matter.add.image(x, centerY, shapeType);
     shape.setBounce(0.5).setFriction(0.5);
   });
 }
