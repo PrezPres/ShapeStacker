@@ -24,6 +24,7 @@ let timerText;
 let countdown = 30; // Countdown timer (in seconds)
 let timerEvent;
 let shapes = []; // To track active shapes
+let shapesInBoxText; // To display the number of shapes in the box
 
 function preload() {
   // Load images for shapes
@@ -49,6 +50,12 @@ function create() {
   graphics.beginPath();
   graphics.moveTo(centerX, centerY);
   graphics.lineTo(centerX + gameWidth, centerY);
+  graphics.strokePath();
+
+  // Bottom line
+  graphics.beginPath();
+  graphics.moveTo(centerX, centerY + gameHeight); // Bottom-left corner
+  graphics.lineTo(centerX + gameWidth, centerY + gameHeight); // Bottom-right corner
   graphics.strokePath();
 
   // Left border
@@ -85,7 +92,7 @@ function create() {
     font: "16px Arial",
     fill: "#fff",
   });
-  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 30, nextShapeType).setScale(0.5);
+  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 20, nextShapeType).setScale(0.5);
 
   // Add countdown timer
   timerText = this.add.text(config.width / 2, 50, `Time Left: ${countdown}`, {
@@ -93,6 +100,13 @@ function create() {
     fill: "#fff",
   });
   timerText.setOrigin(0.5);
+
+  // Shapes in box text
+  shapesInBoxText = this.add.text(config.width / 2, 70, `Shapes in Box: 0`, {
+    font: "18px Arial",
+    fill: "#fff",
+  });
+  shapesInBoxText.setOrigin(0.5);
 
   // Start timer
   timerEvent = this.time.addEvent({
@@ -103,6 +117,10 @@ function create() {
       if (countdown <= 0) {
         timerEvent.remove(); // Stop the timer
         timerText.setText("Time's Up!");
+
+        // Count shapes in the box
+        const shapesInBox = shapes.filter((shape) => shape.y < centerY + gameHeight).length;
+        shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
       }
     },
     callbackScope: this,
