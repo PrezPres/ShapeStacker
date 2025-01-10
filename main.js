@@ -3,7 +3,6 @@ const config = {
   width: 800,
   height: 600,
   backgroundColor: "#87ceeb",
-  parent: "game-container",  // Add this line to target the game container div
   physics: {
     default: "matter",
     matter: {
@@ -106,7 +105,7 @@ function create() {
   timerText.setOrigin(0.5);
 
   // Shapes in box text
-  shapesInBoxText = this.add.text(centerX + gameWidth - 90, centerY + gameHeight + 20, `Shapes in Box: 0`, {
+  shapesInBoxText = this.add.text(centerX + gameWidth - 80, centerY + gameHeight + 20, `Shapes in Box: 0`, {
     font: "18px Arial",
     fill: "#fff",
   });
@@ -118,7 +117,7 @@ function create() {
       startTimer.call(this); // Start timer on first click
       timerStarted = true;
     }
-    
+
     if (countdown > 0 && pointer.y < centerY) {
       const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
       const shape = this.matter.add.image(x, centerY, nextShapeType);
@@ -160,7 +159,7 @@ function startExtraTime() {
       if (extraTime <= 0) {
         additionalTimeElapsed = true;
         shapesInBoxText.setText(`Final Count Locked: ${shapes.filter((shape) => shape.y < config.height).length}`);
-        
+
         // Lock gravity and movement of shapes
         shapes.forEach((shape) => {
           shape.setStatic(true);  // Lock the shapes in place
@@ -214,5 +213,3 @@ function resetShapesPosition() {
   });
   shapes = []; // Clear the shapes array after removing all shapes
 }
-
-
