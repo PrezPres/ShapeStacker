@@ -4,7 +4,7 @@ const config = {
   type: Phaser.AUTO,
   width: Math.min(gameContainer.clientWidth, 800),
   height: Math.min(gameContainer.clientHeight, 600),
-  backgroundColor: "#f0f0f0",
+  backgroundColor: "#87ceeb",
   parent: "game-container",
   physics: {
     default: "matter",
@@ -59,9 +59,15 @@ function create() {
   const centerX = (config.width - gameWidth) / 2;
   const centerY = (config.height - gameHeight) / 2;
 
-  // Draw the top line and tall side borders
+  // Create graphics object
   const graphics = this.add.graphics();
-  graphics.lineStyle(4, 0xffffff);
+  
+  // Fill the game area with #f0f0f0
+  graphics.fillStyle(0xf0f0f0, 1); // Color and opacity
+  graphics.fillRect(centerX, centerY, gameWidth, gameHeight);
+  
+  // Draw the top line and tall side borders
+  graphics.lineStyle(4, 0xffffff); // Border color and thickness
 
   // Top line
   graphics.beginPath();
