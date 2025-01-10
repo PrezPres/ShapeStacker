@@ -1,7 +1,7 @@
 const config = {
   type: Phaser.AUTO,
-  width: window.innerWidth * 0.9,  // 90% of the viewport width
-  height: window.innerHeight * 0.6, // 60% of the viewport height
+  width: Math.min(window.innerWidth * 0.9, 800),  // 90% of the viewport width, capped at 800px
+  height: Math.min(window.innerHeight * 0.6, 600), // 60% of the viewport height, capped at 600px
   backgroundColor: "#87ceeb",
   parent: "game-container",  // Add this line to target the game container div
   physics: {
@@ -22,7 +22,7 @@ const game = new Phaser.Game(config);
 
 // Resize the game when the window is resized
 window.addEventListener('resize', () => {
-  game.scale.resize(window.innerWidth * 0.9, window.innerHeight * 0.6);
+  game.scale.resize(Math.min(window.innerWidth * 0.9, 800), Math.min(window.innerHeight * 0.6, 600));
 });
 
 let nextShapeType;
