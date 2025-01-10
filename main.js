@@ -3,7 +3,7 @@ const config = {
   width: window.innerWidth * 0.9,  // 90% of the viewport width
   height: window.innerHeight * 0.6, // 60% of the viewport height
   backgroundColor: "#87ceeb",
-  parent: "game-container",  // This links to the div where the game will render
+  parent: "game-container",  // Add this line to target the game container div
   physics: {
     default: "matter",
     matter: {
@@ -16,10 +16,6 @@ const config = {
     create,
     update,
   },
-  scale: {
-    mode: Phaser.Scale.RESIZE,  // Adjust the game scale dynamically
-    autoCenter: Phaser.Scale.CENTER_BOTH,  // Center the canvas
-  }
 };
 
 const game = new Phaser.Game(config);
@@ -27,7 +23,6 @@ const game = new Phaser.Game(config);
 // Resize the game when the window is resized
 window.addEventListener('resize', () => {
   game.scale.resize(window.innerWidth * 0.9, window.innerHeight * 0.6);
-  game.canvas.style.margin = '0 auto'; // Ensures that it's centered
 });
 
 let nextShapeType;
@@ -51,11 +46,11 @@ function preload() {
 }
 
 function create() {
-  // Use the config.width and config.height for canvas size
+  // Game dimensions should already be set to match the container size
   const gameWidth = config.width;
   const gameHeight = config.height;
 
-  // The center position of the game area
+  // Center of the game area
   const centerX = gameWidth / 2;
   const centerY = gameHeight / 2;
 
@@ -65,39 +60,39 @@ function create() {
 
   // Top line
   graphics.beginPath();
-  graphics.moveTo(centerX, centerY);
-  graphics.lineTo(centerX + gameWidth, centerY);
+  graphics.moveTo(centerX - gameWidth / 2, centerY - gameHeight / 2);
+  graphics.lineTo(centerX + gameWidth / 2, centerY - gameHeight / 2);
   graphics.strokePath();
 
   // Bottom line
   graphics.beginPath();
-  graphics.moveTo(centerX, centerY + gameHeight); // Bottom-left corner
-  graphics.lineTo(centerX + gameWidth, centerY + gameHeight); // Bottom-right corner
+  graphics.moveTo(centerX - gameWidth / 2, centerY + gameHeight / 2);
+  graphics.lineTo(centerX + gameWidth / 2, centerY + gameHeight / 2);
   graphics.strokePath();
 
   // Left border
   graphics.beginPath();
-  graphics.moveTo(centerX, centerY);
-  graphics.lineTo(centerX, centerY + gameHeight);
+  graphics.moveTo(centerX - gameWidth / 2, centerY - gameHeight / 2);
+  graphics.lineTo(centerX - gameWidth / 2, centerY + gameHeight / 2);
   graphics.strokePath();
 
   // Right border
   graphics.beginPath();
-  graphics.moveTo(centerX + gameWidth, centerY);
-  graphics.lineTo(centerX + gameWidth, centerY + gameHeight);
+  graphics.moveTo(centerX + gameWidth / 2, centerY - gameHeight / 2);
+  graphics.lineTo(centerX + gameWidth / 2, centerY + gameHeight / 2);
   graphics.strokePath();
 
   // Add ground
   const ground = this.matter.add.rectangle(
-    config.width / 2,
-    centerY + gameHeight + 20,
+    centerX,
+    centerY + gameHeight / 2 + 20,
     gameWidth,
     40,
     { isStatic: true }
   );
 
   // Instruction text
-  const instructions = this.add.text(config.width / 2, centerY + 20, "Tap above the line to drop shapes!", {
+  const instructions = this.add.text(centerX, centerY - gameHeight / 2 + 20, "Tap above the line to drop shapes!", {
     font: "18px Arial",
     fill: "#fff",
   });
@@ -105,21 +100,21 @@ function create() {
 
   // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
-  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - 40, "Next:", {
+  const nextShapeText = this.add.text(centerX + gameWidth / 2 - 100, centerY - gameHeight / 2 - 40, "Next:", {
     font: "16px Arial",
     fill: "#fff",
   });
-  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 30, nextShapeType).setScale(0.5);
+  const nextShape = this.add.image(centerX + gameWidth / 2 - 20, centerY - gameHeight / 2 - 30, nextShapeType).setScale(0.5);
 
   // Add countdown timer
-  timerText = this.add.text(centerX + 50, centerY + gameHeight + 20, `Time Left: ${countdown}`, {
+  timerText = this.add.text(centerX + 50, centerY + gameHeight / 2 + 20, `Time Left: ${countdown}`, {
     font: "18px Arial",
     fill: "#fff",
   });
   timerText.setOrigin(0.5);
 
   // Shapes in box text
-  shapesInBoxText = this.add.text(centerX + gameWidth - 80, centerY + gameHeight + 20, `Shapes in Box: 0`, {
+  shapesInBoxText = this.add.text(centerX + gameWidth / 2 - 80, centerY + gameHeight / 2 + 20, `Shapes in Box: 0`, {
     font: "18px Arial",
     fill: "#fff",
   });
@@ -133,7 +128,7 @@ function create() {
     }
     
     if (countdown > 0 && pointer.y < centerY) {
-      const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
+      const x = Phaser.Math.Clamp(pointer.x, centerX - gameWidth / 2, centerX + gameWidth / 2);
       const shape = this.matter.add.image(x, centerY, nextShapeType);
       shape.setBounce(0.5).setFriction(0.5);
       shapes.push(shape); // Track the shape
@@ -198,5 +193,3 @@ function update() {
 document.getElementById("reset-button").addEventListener("click", () => {
   location.reload(); // Reload the entire page
 });
-
-
