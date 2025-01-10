@@ -61,10 +61,12 @@ p {
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
   h1 {
+    width: 95%;
     font-size: 1.5em;  /* Smaller title on smaller screens */
   }
 
   p {
+    width: 95%;
     font-size: 1em;  /* Adjust text size for smaller screens */
     margin: 10px;
   }
@@ -82,10 +84,12 @@ p {
 
 @media (max-width: 400px) {
   h1 {
+    width: 95%;
     font-size: 1.3em;
   }
 
   p {
+    width: 95%;
     font-size: 0.9em;
   }
 
