@@ -70,8 +70,8 @@ p {
   }
 
   #game-container {
-    width: 80vw;  /* 80% of the phone's width in portrait mode */
-    height: 50vh;  /* Adjust height for smaller screens */
+    width: 90vw;  /* 80% of the phone's width in portrait mode */
+    height: 60vh;  /* Adjust height for smaller screens */
   }
 
   .reset-button {
@@ -90,8 +90,8 @@ p {
   }
 
   #game-container {
-    width: 70vw;  /* 70% of the phone's width in portrait mode */
-    height: 45vh;
+    width: 90vw;  /* 70% of the phone's width in portrait mode */
+    height: 60vh;
   }
 
   .reset-button {
