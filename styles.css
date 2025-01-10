@@ -12,15 +12,25 @@ body {
 }
 
 h1 {
-  margin-bottom: 20px;
+  margin: 0 20px;
   font-size: 2em;
+  width: 100%;
+  text-align: center;
+}
+
+p {
+  margin: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.1em;
+  line-height: 1.4;
 }
 
 /* Game Container */
 #game-container {
   width: 90%;
-  max-width: 800px;  /* Max width for larger screens */
-  height: 60vh;  /* 60% of the viewport height */
+  max-width: 800px;
+  height: 60vh;
   background-color: #f0f0f0;
   margin-bottom: 20px;
 }
@@ -54,7 +64,13 @@ h1 {
     font-size: 1.5em;  /* Smaller title on smaller screens */
   }
 
+  p {
+    font-size: 1em;  /* Adjust text size for smaller screens */
+    margin: 10px;
+  }
+
   #game-container {
+    width: 80vw;  /* 80% of the phone's width in portrait mode */
     height: 50vh;  /* Adjust height for smaller screens */
   }
 
@@ -62,9 +78,24 @@ h1 {
     font-size: 16px;
     padding: 10px 20px;
   }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.3em;
+  }
 
   p {
-    font-size: 1em;  /* Adjust text size for smaller screens */
-    margin: 10px;
+    font-size: 0.9em;
+  }
+
+  #game-container {
+    width: 70vw;  /* 70% of the phone's width in portrait mode */
+    height: 45vh;
+  }
+
+  .reset-button {
+    font-size: 14px;
+    padding: 8px 16px;
   }
 }
