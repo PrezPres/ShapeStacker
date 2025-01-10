@@ -4,7 +4,7 @@ const config = {
   type: Phaser.AUTO,
   width: Math.min(gameContainer.clientWidth, 800),
   height: Math.min(gameContainer.clientHeight, 600),
-  backgroundColor: "#87ceeb",
+  backgroundColor: "#f0f0f0",
   parent: "game-container",
   physics: {
     default: "matter",
