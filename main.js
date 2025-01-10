@@ -20,7 +20,6 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-
 let nextShapeType;
 let timerText;
 let countdown = 30; // Countdown timer (in seconds)
