@@ -180,3 +180,10 @@ function update() {
     shapesInBoxText.setText(`Shapes in Box: ${shapesInBox}`);
   }
 }
+
+// Reset button functionality
+document.getElementById("reset-button").addEventListener("click", resetGame);
+
+function resetGame() {
+  // Reset the game variables
+}
