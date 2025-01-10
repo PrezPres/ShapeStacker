@@ -18,7 +18,7 @@ const config = {
   },
   scale: {
     mode: Phaser.Scale.RESIZE,  // Adjust the game scale dynamically
-    autoCenter: Phaser.Scale.CENTER_BOTH,  // Center the canvas
+    //autoCenter: Phaser.Scale.CENTER_BOTH,  // Center the canvas
   }
 };
 
