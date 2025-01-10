@@ -48,11 +48,8 @@ function preload() {
 function create() {
   console.log('Phaser game has started!');
   
-  // const gameWidth = 600;
-  // const gameHeight = 500;
-  const gameWidth = config.width;
-  const gameHeight = config.height;
-  
+  const gameWidth = 600;
+  const gameHeight = 500;
   const centerX = (config.width - gameWidth) / 2;
   const centerY = (config.height - gameHeight) / 2;
 
