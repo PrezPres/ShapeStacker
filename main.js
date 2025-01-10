@@ -3,6 +3,7 @@ const config = {
   width: 800,
   height: 600,
   backgroundColor: "#87ceeb",
+  parent: "game-container",  // Add this line to target the game container div
   physics: {
     default: "matter",
     matter: {
@@ -117,7 +118,7 @@ function create() {
       startTimer.call(this); // Start timer on first click
       timerStarted = true;
     }
-
+    
     if (countdown > 0 && pointer.y < centerY) {
       const x = Phaser.Math.Clamp(pointer.x, centerX, centerX + gameWidth);
       const shape = this.matter.add.image(x, centerY, nextShapeType);
@@ -159,7 +160,7 @@ function startExtraTime() {
       if (extraTime <= 0) {
         additionalTimeElapsed = true;
         shapesInBoxText.setText(`Final Count Locked: ${shapes.filter((shape) => shape.y < config.height).length}`);
-
+        
         // Lock gravity and movement of shapes
         shapes.forEach((shape) => {
           shape.setStatic(true);  // Lock the shapes in place
@@ -184,32 +185,26 @@ function update() {
 document.getElementById("reset-button").addEventListener("click", resetGame);
 
 function resetGame() {
-  // Reset the game variables
-  countdown = 30;
-  extraTime = 15;
-  shapes = []; // Clear the current shapes array
-  additionalTimeElapsed = false; // Reset the additional time flag
-  timerStarted = false; // Reset the timer flag
-  timerText.setText(`Time Left: ${countdown}`); // Reset the timer display
-  shapesInBoxText.setText(`Shapes in Box: 0`); // Reset the shapes in box display
+  // Reset all relevant variables
+  shapes = []; // Clear the shapes
+  countdown = 30; // Reset the countdown timer
+  extraTime = 15; // Reset extra time
+  additionalTimeElapsed = false; // Reset the flag for additional time
+  timerStarted = false; // Reset the timer start flag
+  shapesInBoxText.setText(`Shapes in Box: 0`); // Reset the "Shapes in Box" text
+  timerText.setText(`Time Left: ${countdown}`); // Reset the timer text
 
-  // Restart the game timer
-  if (timerEvent) {
-    timerEvent.remove(); // Remove any ongoing timer events
-  }
-
-  // Reset shapes and their positions
-  resetShapesPosition(); // Ensure shapes are removed from the game
-
-  // Restart the countdown timer
-  startTimer.call(this); // Start the timer again on reset
-}
-
-// Reset all shapes' positions and remove them from the game area
-function resetShapesPosition() {
-  // Iterate through all shapes and destroy them
+  // Remove any shapes that are already in the game (and not locked)
   shapes.forEach((shape) => {
-    shape.destroy(); // Remove shape from the scene
+    shape.destroy();
   });
-  shapes = []; // Clear the shapes array after removing all shapes
+
+  // Reset the physics and gravity
+  shapes.forEach((shape) => {
+    shape.setStatic(false); // Make shapes movable again
+  });
+
+  // Restart the game scene to reset everything
+  game.scene.restart();
 }
+
