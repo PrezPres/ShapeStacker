@@ -43,5 +43,5 @@ h1 {
 #reset-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* Ensure the button is below the game area */
+  margin-top: 70px; /* Ensure the button is below the game area */
 }
