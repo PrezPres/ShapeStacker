@@ -185,5 +185,26 @@ function update() {
 document.getElementById("reset-button").addEventListener("click", resetGame);
 
 function resetGame() {
-  // Reset the game variables
+  // Reset all relevant variables
+  shapes = []; // Clear the shapes
+  countdown = 30; // Reset the countdown timer
+  extraTime = 15; // Reset extra time
+  additionalTimeElapsed = false; // Reset the flag for additional time
+  timerStarted = false; // Reset the timer start flag
+  shapesInBoxText.setText(`Shapes in Box: 0`); // Reset the "Shapes in Box" text
+  timerText.setText(`Time Left: ${countdown}`); // Reset the timer text
+
+  // Remove any shapes that are already in the game (and not locked)
+  shapes.forEach((shape) => {
+    shape.destroy();
+  });
+
+  // Reset the physics and gravity
+  shapes.forEach((shape) => {
+    shape.setStatic(false); // Make shapes movable again
+  });
+
+  // Restart the game scene to reset everything
+  game.scene.restart();
 }
+
