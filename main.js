@@ -214,3 +214,4 @@ function resetShapesPosition() {
   });
   shapes = []; // Clear the shapes array after removing all shapes
 }
+
