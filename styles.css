@@ -32,7 +32,10 @@ p {
   max-width: 800px;
   height: 60vh;
   background-color: #f0f0f0;
-  margin-bottom: 20px;
+  margin: 0 auto;  /* Ensure it's centered horizontally */
+  display: flex;   /* Make sure game canvas aligns properly */
+  justify-content: center;
+  align-items: center;
 }
 
 /* Reset Button Styling */
