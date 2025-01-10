@@ -29,9 +29,11 @@ p {
 
 /* Game Container */
 #game-container {
-  width: 90%;
-  max-width: 800px;
+  width: 90vh;
   height: 60vh;
+  max-width: 800px;
+  max-height: 600px;
+  
   background-color: #f0f0f0;
   margin-bottom: 20px;
 }
@@ -70,11 +72,6 @@ p {
     margin: 10px;
   }
 
-  #game-container {
-    width: 90vw;  /* 80% of the phone's width in portrait mode */
-    height: 60vh;  /* Adjust height for smaller screens */
-  }
-
   .reset-button {
     font-size: 16px;
     padding: 10px 20px;
@@ -88,11 +85,6 @@ p {
 
   p {
     font-size: 0.9em;
-  }
-
-  #game-container {
-    width: 90vw;  /* 70% of the phone's width in portrait mode */
-    height: 60vh;
   }
 
   .reset-button {
