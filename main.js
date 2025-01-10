@@ -3,6 +3,7 @@ const config = {
   width: 800,
   height: 600,
   backgroundColor: "#87ceeb",
+  parent: "game-container",  // Add this line to target the game container div
   physics: {
     default: "matter",
     matter: {
