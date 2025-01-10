@@ -18,7 +18,7 @@ const config = {
   },
   scale: {
     mode: Phaser.Scale.RESIZE,  // Adjust the game scale dynamically
-    //autoCenter: Phaser.Scale.CENTER_BOTH,  // Center the canvas
+    autoCenter: Phaser.Scale.CENTER_BOTH,  // Center the canvas
   }
 };
 
@@ -51,10 +51,13 @@ function preload() {
 }
 
 function create() {
-  const gameWidth = 600;
-  const gameHeight = 500;
-  const centerX = (config.width - gameWidth) / 2;
-  const centerY = (config.height - gameHeight) / 2;
+  // Use the config.width and config.height for canvas size
+  const gameWidth = config.width;
+  const gameHeight = config.height;
+
+  // The center position of the game area
+  const centerX = gameWidth / 2;
+  const centerY = gameHeight / 2;
 
   // Draw the top line and tall side borders
   const graphics = this.add.graphics();
@@ -109,7 +112,7 @@ function create() {
   const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 30, nextShapeType).setScale(0.5);
 
   // Add countdown timer
-  timerText = this.add.text(centerX + 50, centerY + gameHeight + 20, `1Time Left: ${countdown}`, {
+  timerText = this.add.text(centerX + 50, centerY + gameHeight + 20, `Time Left: ${countdown}`, {
     font: "18px Arial",
     fill: "#fff",
   });
