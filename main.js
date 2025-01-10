@@ -3,7 +3,7 @@ const config = {
   width: window.innerWidth * 0.9,  // 90% of the viewport width
   height: window.innerHeight * 0.6, // 60% of the viewport height
   backgroundColor: "#87ceeb",
-  parent: "game-container",  // Add this line to target the game container div
+  parent: "game-container",  // Target the game container div
   physics: {
     default: "matter",
     matter: {
@@ -22,7 +22,8 @@ const game = new Phaser.Game(config);
 
 // Resize the game when the window is resized
 window.addEventListener('resize', () => {
-  game.scale.resize(window.innerWidth * 0.9, window.innerHeight * 0.6);
+  const container = document.getElementById("game-container");
+  game.scale.resize(container.clientWidth, container.clientHeight); // Ensure Phaser canvas is resized to container size
 });
 
 let nextShapeType;
