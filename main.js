@@ -1,9 +1,11 @@
+const gameContainer = document.getElementById("game-container");
+
 const config = {
   type: Phaser.AUTO,
-  width: Math.min(window.innerWidth * 0.9, 800),  // 90% of the viewport width, capped at 800px
-  height: Math.min(window.innerHeight * 0.6, 600), // 60% of the viewport height, capped at 600px
+  width: Math.min(gameContainer.clientWidth, 800),
+  height: Math.min(gameContainer.clientHeight, 600),
   backgroundColor: "#87ceeb",
-  parent: "game-container",  // Add this line to target the game container div
+  parent: "game-container",
   physics: {
     default: "matter",
     matter: {
@@ -20,10 +22,14 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-// Resize the game when the window is resized
-window.addEventListener('resize', () => {
-  game.scale.resize(Math.min(window.innerWidth * 0.9, 800), Math.min(window.innerHeight * 0.6, 600));
+// Adjust game size on resize
+window.addEventListener("resize", () => {
+  game.scale.resize(
+    Math.min(gameContainer.clientWidth, 800),
+    Math.min(gameContainer.clientHeight, 600)
+  );
 });
+
 
 let nextShapeType;
 let timerText;
