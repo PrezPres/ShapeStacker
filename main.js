@@ -109,7 +109,7 @@ function create() {
   const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 30, nextShapeType).setScale(0.5);
 
   // Add countdown timer
-  timerText = this.add.text(centerX + 50, centerY + gameHeight + 20, `Time Left: ${countdown}`, {
+  timerText = this.add.text(centerX + 50, centerY + gameHeight + 20, `1Time Left: ${countdown}`, {
     font: "18px Arial",
     fill: "#fff",
   });
