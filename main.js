@@ -3,7 +3,7 @@ const config = {
   width: window.innerWidth * 0.9,  // 90% of the viewport width
   height: window.innerHeight * 0.6, // 60% of the viewport height
   backgroundColor: "#87ceeb",
-  parent: "game-container",  // Add this line to target the game container div
+  parent: "game-container",  // This links to the div where the game will render
   physics: {
     default: "matter",
     matter: {
@@ -16,6 +16,10 @@ const config = {
     create,
     update,
   },
+  scale: {
+    mode: Phaser.Scale.RESIZE,  // Adjust the game scale dynamically
+    autoCenter: Phaser.Scale.CENTER_BOTH,  // Center the canvas
+  }
 };
 
 const game = new Phaser.Game(config);
@@ -23,6 +27,7 @@ const game = new Phaser.Game(config);
 // Resize the game when the window is resized
 window.addEventListener('resize', () => {
   game.scale.resize(window.innerWidth * 0.9, window.innerHeight * 0.6);
+  game.canvas.style.margin = '0 auto'; // Ensures that it's centered
 });
 
 let nextShapeType;
