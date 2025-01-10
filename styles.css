@@ -1,37 +1,38 @@
 body {
   margin: 0;
   padding: 0;
-  
   font-family: Arial, sans-serif;
   text-align: center;
-  
   display: flex;
-  justify-content: flex-start; /* Start content from the top */
+  justify-content: center; /* Center content horizontally */
   align-items: center;
   flex-direction: column;
   height: 100vh;
   background-color: #87ceeb;
 }
 
-#game-container {
-  width: 800px;
-  height: 600px; /* Set a fixed height for the game area */
-  background-color: #f0f0f0;
-  margin-bottom: 20px; /* Adds spacing between the game and the button */
+h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
 }
 
-h1 {
+/* Game Container */
+#game-container {
+  width: 90%;
+  max-width: 800px;  /* Max width for larger screens */
+  height: 60vh;  /* 60% of the viewport height */
+  background-color: #f0f0f0;
   margin-bottom: 20px;
 }
 
 /* Reset Button Styling */
 .reset-button {
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: 2px solid #ccc;
   background-color: #ffb200;
   cursor: pointer;
-  margin: 5px;
+  margin: 10px;
   border-radius: 5px;
   font-size: 18px;
 }
@@ -40,7 +41,30 @@ h1 {
   background-color: #ff9f00;
 }
 
+/* Reset button container: Ensures the button is centered */
 #reset-button-container {
   display: flex;
   justify-content: center;
+  width: 100%;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5em;  /* Smaller title on smaller screens */
+  }
+
+  #game-container {
+    height: 50vh;  /* Adjust height for smaller screens */
+  }
+
+  .reset-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  p {
+    font-size: 1em;  /* Adjust text size for smaller screens */
+    margin: 10px;
+  }
 }
