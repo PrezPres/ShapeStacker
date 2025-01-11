@@ -186,9 +186,9 @@ function startExtraTime() {
   const extraTimeText = this.add.text(
     config.width / 2, // Center horizontally
     -40,               // Small margin from the top
-    `Extra Time: ${extraTime}`,
+    `${extraTime}`,
     {
-      font: "24px Arial",
+      font: "28px Arial",
       fill: "#ff0000", // Red color for emphasis
       align: "center",
     }
