@@ -185,11 +185,11 @@ function startExtraTime() {
   // Create a text message at the top center for the extra time countdown
   const extraTimeText = this.add.text(
     config.width / 2, // Center horizontally
-    60,               // Small margin from the top
+    40,               // Small margin from the top
     `Extra Time: ${extraTime}`,
     {
-      font: "28px Arial",
-      fill: "#ff0000", // Red color for emphasis
+      font: "24px Arial",
+      fill: "#ff0000", // Red color for the font
       align: "center",
     }
   );
