@@ -136,7 +136,7 @@ function create() {
   timerText.setOrigin(0.5);
 
   // Shapes in box text
-  shapesInBoxText = this.add.text(centerX + gameWidth - 90, centerY + gameHeight + 20, `Shapes in Box: 0`, {
+  shapesInBoxText = this.add.text(centerX + gameWidth - 50, centerY + gameHeight + 20, `Shapes in Box: 0`, {
     font: "18px Arial",
     fill: "#fff",
   });
@@ -204,7 +204,7 @@ function startExtraTime() {
 
       if (extraTime <= 0) {
         additionalTimeElapsed = true;
-        shapesInBoxText.setText(`Final Count Locked: ${shapes.filter((shape) => shape.y < config.height).length}`);
+        shapesInBoxText.setText(`Final Count: ${shapes.filter((shape) => shape.y < config.height).length}`);
         
         // Lock gravity and movement of shapes
         shapes.forEach((shape) => {
