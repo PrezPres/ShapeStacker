@@ -66,8 +66,19 @@ function create() {
   graphics.fillStyle(0xf0f0f0, 1); // Color and opacity
   graphics.fillRect(centerX, centerY, gameWidth, gameHeight);
   
-  // Draw the top line and tall side borders
-  graphics.lineStyle(4, 0xffffff); // Border color and thickness
+  // Top line (red dashed)
+  const dashLength = 10; // Length of each dash
+  const gapLength = 5;   // Length of the gap between dashes
+  graphics.lineStyle(4, 0xff0000); // Red color and thickness
+  graphics.beginPath();
+  for (let x = centerX; x < centerX + gameWidth; x += dashLength + gapLength) {
+    graphics.moveTo(x - 40, centerY);
+    graphics.lineTo(Math.min(x + dashLength, centerX + gameWidth), centerY);
+  }
+  graphics.strokePath();
+  
+  // Draw the side borders and bottom line (keep them white)
+  graphics.lineStyle(4, 0xffffff); // White color and thickness
 
   // Top line
   graphics.beginPath();
