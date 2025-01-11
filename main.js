@@ -186,7 +186,7 @@ function startExtraTime() {
   const extraTimeText = this.add.text(
     config.width / 2, // Center horizontally
     20,               // Small margin from the top
-    `Extra Time: ${extraTime}`,
+    `Locked in: ${extraTime}`,
     {
       font: "24px Arial",
       fill: "#ff0000", // Red color for the font
