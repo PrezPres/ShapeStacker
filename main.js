@@ -182,19 +182,37 @@ function startTimer() {
 }
 
 function startExtraTime() {
+  // Create a text message at the top center for the extra time countdown
+  const extraTimeText = this.add.text(
+    config.width / 2, // Center horizontally
+    40,               // Small margin from the top
+    `Extra Time: ${extraTime}`,
+    {
+      font: "24px Arial",
+      fill: "#ff0000", // Red color for emphasis
+      align: "center",
+    }
+  );
+  extraTimeText.setOrigin(0.5); // Center align the text
+
   // Additional 15 seconds after the main timer ends
   this.time.addEvent({
     delay: 1000, // 1 second
     callback: () => {
       extraTime--;
+      extraTimeText.setText(`Extra Time: ${extraTime}`); // Update the text message
+
       if (extraTime <= 0) {
         additionalTimeElapsed = true;
         shapesInBoxText.setText(`Final Count Locked: ${shapes.filter((shape) => shape.y < config.height).length}`);
         
         // Lock gravity and movement of shapes
         shapes.forEach((shape) => {
-          shape.setStatic(true);  // Lock the shapes in place
+          shape.setStatic(true); // Lock the shapes in place
         });
+
+        // Hide the extra time text
+        extraTimeText.setVisible(false);
       }
     },
     callbackScope: this,
