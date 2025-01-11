@@ -200,7 +200,7 @@ function startExtraTime() {
     delay: 1000, // 1 second
     callback: () => {
       extraTime--;
-      extraTimeText.setText(`Extra Time: ${extraTime}`); // Update the text message
+      extraTimeText.setText(`Locked in: ${extraTime}`); // Update the text message
 
       if (extraTime <= 0) {
         additionalTimeElapsed = true;
