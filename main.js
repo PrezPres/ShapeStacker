@@ -122,7 +122,7 @@ function create() {
 
   // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
-  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - (config.height * .08), "Next:", {
+  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - (config.height * .06), "Next:", {
     font: "16px Arial",
     fill: "#fff",
   });
