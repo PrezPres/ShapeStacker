@@ -122,11 +122,11 @@ function create() {
 
   // Show the next shape above the gameplay box
   nextShapeType = Phaser.Math.RND.pick(["rectangle", "square", "sticky", "triangle", "circle", "star"]);
-  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - 40, "Next:", {
+  const nextShapeText = this.add.text(centerX + gameWidth - 100, centerY - (config.height * .04), "Next:", {
     font: "16px Arial",
     fill: "#fff",
   });
-  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - 30, nextShapeType).setScale(0.5);
+  const nextShape = this.add.image(centerX + gameWidth - 20, centerY - (config.height * .04), nextShapeType).setScale(0.5);
 
   // Add countdown timer
   timerText = this.add.text(centerX + 50, centerY + gameHeight + 20, `Time Left: ${countdown}`, {
