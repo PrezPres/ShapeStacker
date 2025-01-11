@@ -136,7 +136,7 @@ function create() {
   timerText.setOrigin(0.5);
 
   // Shapes in box text
-  shapesInBoxText = this.add.text(centerX + gameWidth - 50, centerY + gameHeight + 20, `Shapes in Box: 0`, {
+  shapesInBoxText = this.add.text(centerX + gameWidth - 60, centerY + gameHeight + 20, `Shapes in Box: 0`, {
     font: "18px Arial",
     fill: "#fff",
   });
