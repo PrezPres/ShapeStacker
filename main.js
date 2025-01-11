@@ -72,8 +72,8 @@ function create() {
   graphics.lineStyle(4, 0xff0000); // Red color and thickness
   graphics.beginPath();
   for (let x = centerX; x < centerX + gameWidth; x += dashLength + gapLength) {
-    graphics.moveTo(x - 40, centerY);
-    graphics.lineTo(Math.min(x + dashLength, centerX + gameWidth), centerY);
+    graphics.moveTo(x, centerY - 40);
+    graphics.lineTo(Math.min(x + dashLength, centerX + gameWidth), centerY - 40);
   }
   graphics.strokePath();
   
