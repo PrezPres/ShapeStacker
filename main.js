@@ -54,8 +54,8 @@ function preload() {
 function create() {
   console.log('Phaser game has started!');
   
-  const gameWidth = config.width * .8; // 600;
-  const gameHeight = config.height * .8; // 500;
+  const gameWidth = config.width * .84; // 600;
+  const gameHeight = config.height * .84; // 500;
   const centerX = (config.width - gameWidth) / 2;
   const centerY = (config.height - gameHeight) / 2;
 
@@ -72,8 +72,8 @@ function create() {
   graphics.lineStyle(4, 0xff0000); // Red color and thickness
   graphics.beginPath();
   for (let x = centerX; x < centerX + gameWidth; x += dashLength + gapLength) {
-    graphics.moveTo(x, centerY - 40);
-    graphics.lineTo(Math.min(x + dashLength, centerX + gameWidth), centerY - 40);
+    graphics.moveTo(x, centerY - (config.height * .08));
+    graphics.lineTo(Math.min(x + dashLength, centerX + gameWidth), centerY - (config.height * .08));
   }
   graphics.strokePath();
   
